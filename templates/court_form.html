@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Form Lapangan{% endblock %}{% block content %}
+<div class="form-card card p-4"><h2 class="fw-bold mb-3">{{ 'Edit' if court else 'Tambah' }} Lapangan</h2><form method="post" action="{{ '/courts/' ~ court.id ~ '/edit' if court else '/courts/new' }}">
+<label class="form-label">Nama lapangan</label><input class="form-control mb-3" name="name" value="{{ court.name if court else '' }}" required>
+<label class="form-label">Jenis olahraga</label><select class="form-select mb-3" name="sport_id" required>{% for s in sports %}<option value="{{ s.id }}" {% if court and court.sport_id == s.id %}selected{% endif %}>{{ s.name }}</option>{% endfor %}</select>
+<label class="form-label">Lokasi</label><input class="form-control mb-3" name="location" value="{{ court.location if court else '' }}" required>
+<label class="form-label">Harga per jam (Rp)</label><input class="form-control mb-3" type="number" min="1" name="price_per_hour" value="{{ court.price_per_hour if court else '' }}" required>
+<label class="form-label">Status</label><select class="form-select mb-3" name="status"><option {% if not court or court.status == 'Aktif' %}selected{% endif %}>Aktif</option><option {% if court and court.status == 'Tidak Aktif' %}selected{% endif %}>Tidak Aktif</option></select>
+<button class="btn btn-primary">Simpan</button> <a class="btn btn-light" href="/courts">Kembali</a></form></div>{% endblock %}

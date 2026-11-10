@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Booking Lapangan{% endblock %}{% block content %}
+<div class="form-card card p-4"><h2 class="fw-bold">Booking Lapangan</h2><p class="text-secondary">Jam operasional 07.00–23.00. Durasi minimal satu jam.</p>
+<form method="post" action="/bookings/new"><label class="form-label">Pilih lapangan</label><select class="form-select mb-3" name="court_id" required><option value="">-- Pilih lapangan --</option>{% for c in courts %}<option value="{{ c.id }}">{{ c.name }} · {{ c.sport.name }} · Rp {{ "{:,.0f}".format(c.price_per_hour).replace(",", ".") }}/jam</option>{% endfor %}</select>
+<label class="form-label">Tanggal</label><input class="form-control mb-3" type="date" name="booking_date" min="{{ today }}" required>
+<div class="row"><div class="col"><label class="form-label">Jam mulai</label><input class="form-control mb-3" type="time" name="start_time" min="07:00" max="22:00" required></div><div class="col"><label class="form-label">Jam selesai</label><input class="form-control mb-3" type="time" name="end_time" min="08:00" max="23:00" required></div></div>
+<button class="btn btn-primary">Kirim Booking</button> <a class="btn btn-light" href="/bookings">Batal</a></form></div>{% endblock %}

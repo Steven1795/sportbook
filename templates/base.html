@@ -1,0 +1,22 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}SportBook{% endblock %}</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css"></head><body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"><div class="container">
+<a class="navbar-brand fw-bold" href="/dashboard">SportBook</a>
+{% if user %}<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+<div class="collapse navbar-collapse" id="nav"><ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li><li class="nav-item"><a class="nav-link" href="/courts">Lapangan</a></li><li class="nav-item"><a class="nav-link" href="/bookings">Booking</a></li>
+{% if user.role == 'admin' %}<li class="nav-item"><a class="nav-link" href="/sports">Jenis Olahraga</a></li><li class="nav-item"><a class="nav-link" href="/reports">Laporan</a></li>{% endif %}</ul>
+<span class="navbar-text me-3">{{ user.name }} ({{ user.role }})</span><a class="btn btn-outline-light btn-sm" href="/logout">Logout</a></div>{% endif %}
+</div></nav><main class="container py-4">
+{% if request.query_params.get('registered') %}<div class="alert alert-success">Registrasi berhasil. Silakan login.</div>{% endif %}
+{% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+{% if request.query_params.get('error') == 'conflict' %}<div class="alert alert-danger">Jadwal tersebut sudah dipesan. Pilih jam lain.</div>{% endif %}
+{% if request.query_params.get('error') == 'time' %}<div class="alert alert-danger">Periksa jam booking. Operasional 07.00–23.00.</div>{% endif %}
+{% if request.query_params.get('error') == 'duration' %}<div class="alert alert-danger">Durasi booking harus kelipatan satu jam.</div>{% endif %}
+{% if request.query_params.get('error') == 'invalid' %}<div class="alert alert-danger">Data yang dimasukkan tidak valid.</div>{% endif %}
+{% if request.query_params.get('error') == 'duplicate' %}<div class="alert alert-danger">Jenis olahraga sudah ada.</div>{% endif %}
+{% if request.query_params.get('error') == 'used' %}<div class="alert alert-danger">Jenis olahraga masih digunakan lapangan.</div>{% endif %}
+{% block content %}{% endblock %}</main><footer class="text-center text-secondary py-4 small">SportBook · Sistem Booking Lapangan Olahraga</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script></body></html>
